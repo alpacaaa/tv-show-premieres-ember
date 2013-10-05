@@ -8,9 +8,9 @@ App = Ember.Application.create({
 App.IndexRoute = Ember.Route.extend({
 
 	model: function() {
-        var today = new Date(),
-        	apiDate = today.getFullYear() + ("0" + (today.getMonth() + 1)).slice(-2) + "" + ("0" + today.getDate()).slice(-2),
-        	url = 'http://api.trakt.tv/calendar/premieres.json/' + App.get('API_KEY') + '/' + apiDate + '/30?callback=?';
+		var today = new Date(),
+			apiDate = today.getFullYear() + ("0" + (today.getMonth() + 1)).slice(-2) + "" + ("0" + today.getDate()).slice(-2),
+			url = 'http://api.trakt.tv/calendar/premieres.json/' + App.get('API_KEY') + '/' + apiDate + '/30?callback=?';
 
 		return Ember.$.getJSON(url);
 	},
