@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>TV Show Premieres - Ember.js</title>
+
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="app.css">
+	</head>
+
+	<body>
+
+
+	<script type="text/x-handlebars" data-template-name="application">
+		<div class='banner'>
+			<div class='container'>
+				<h1>TV SHOW PREMIERES</h1>
+			</div>
+		</div>
+
+		<div class="container main-frame">
+			{{outlet}}
+		</div>
+	</script>
+
+
+	<script type="text/x-handlebars" data-template-name="index">
+		<div class="search-box row-fluid form-inline">
+			<label>Filter: </label>
+			{{input valueBinding="filterQuery"}}
+
+			<label>Genre: </label>
+			{{view Ember.Select contentBinding="genres" valueBinding="filterGenre"}}
+
+			<label>Order by: </label>
+			{{view Ember.Select contentBinding="orderFields" valueBinding="ordering" classNames="input-medium"}}
+
+			{{view Ember.Select contentBinding="orderDirections" valueBinding="sortDirection" classNames="input-medium"}}
+		</div>
+
+
+		<div class="results-container">
+				<ul class="episode-list">
+
+					{{#each this itemController="episode"}}
+						<li>
+							<div class="row-fluid">
+								<div class="span3">
+									<img {{bindAttr src="episode.images.screen"}} />
+
+									<div class="ratings">
+										<strong>Ratings:</strong>
+										<span class="label">
+											<i class="icon-thumbs-up"></i> {{episode.ratings.loved}}
+										</span>
+										<span class="label">
+											<i class="icon-thumbs-down"></i> {{episode.ratings.hated}}
+										</span>
+										<span {{bindAttr class=":label isLoved:label-success:label-important"}}>
+											<strong>%</strong> {{episode.ratings.percentage}}
+										</span>
+									</div>
+								</div>
+
+								<div class="span6">
+									<h3>{{show.title}}: {{episode.title}}</h3>
+
+									<p>{{episode.overview}}</p>
+								</div>
+
+								<div class="span3">
+									<div class="fulldate pull-right label label-info">{{date}}</div>
+
+									<ul class="show-info">
+										<li><strong>On Air:</strong> {{show.air_day}} {{show.air_time}}</li>
+										<li><strong>Network:</strong> {{show.network}}</li>
+										<li><strong>Season #:</strong> {{episode.season}}</li>
+										<li>
+											<strong>Genres:</strong>
+											{{#each show.genres}}
+												<span class="label label-inverse genre" {{action 'genreClick' this}}>{{this}}</span>
+											{{/each}}
+										</li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+					{{/each}}
+
+				</ul>
+			</div>
+		</div>
+	</script>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
+	<script src="http://builds.emberjs.com/tags/v1.0.0/ember.js"></script>
+
+	<script src="app.js"></script>
+	</body>
+</html>
