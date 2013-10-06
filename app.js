@@ -46,7 +46,7 @@ App.IndexRoute = Ember.Route.extend({
 		controller.set('genres', ['All'].concat(genres));
 
 		controller.set('allEpisodes', data);
-		controller.set('content', data);
+		controller.set('model', data);
 	}
 });
 
@@ -81,7 +81,7 @@ App.IndexController = Ember.ArrayController.extend({
 			return self.matchQuery(obj) && self.matchGenre(obj);
 		});
 
-		this.set('content', filtered);
+		this.set('model', filtered);
 	}.observes('filterQuery', 'filterGenre'),
 
 
