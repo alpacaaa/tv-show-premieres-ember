@@ -43,8 +43,7 @@ App.IndexRoute = Ember.Route.extend({
 			}, []);
 
 
-		controller.set('genres', ['All'].concat(genres));
-
+		controller.set('genres', genres.sort());
 		controller.set('allEpisodes', data);
 		controller.set('model', data);
 	}
@@ -74,12 +73,9 @@ App.IndexController = Ember.ArrayController.extend({
 
 
 	filterChanged: function() {
-		var episodes = this.get('allEpisodes'),
-			self = this;
-
-		var filtered = episodes.filter(function(obj) {
-			return self.matchQuery(obj) && self.matchGenre(obj);
-		});
+		var filtered = this.get('allEpisodes').filter(function(obj) {
+			return this.matchQuery(obj) && this.matchGenre(obj);
+		}, this);
 
 		this.set('model', filtered);
 	}.observes('filterQuery', 'filterGenre'),
@@ -106,9 +102,7 @@ App.IndexController = Ember.ArrayController.extend({
 
 	matchGenre: function(obj) {
 		var genre = this.get('filterGenre');
-		if (genre == 'All') return true;
-
-		return obj.show.genres.indexOf(genre) > -1;
+		return genre ? obj.show.genres.indexOf(genre) > -1 : true;
 	},
 
 
