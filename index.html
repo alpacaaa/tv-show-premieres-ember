@@ -33,7 +33,12 @@
 			{{view Ember.Select contentBinding="genres" valueBinding="filterGenre"}}
 
 			<label>Order by: </label>
-			{{view Ember.Select contentBinding="orderFields" valueBinding="ordering" classNames="input-medium"}}
+			{{view Ember.Select
+				contentBinding="orderFields"
+				optionValuePath="content.property"
+				optionLabelPath="content.label"
+				valueBinding="ordering"
+				classNames="input-medium"}}
 
 			{{view Ember.Select contentBinding="orderDirections" valueBinding="sortDirection" classNames="input-medium"}}
 		</div>
