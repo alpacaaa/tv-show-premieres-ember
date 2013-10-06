@@ -52,14 +52,25 @@ App.IndexRoute = Ember.Route.extend({
 
 
 App.IndexController = Ember.ArrayController.extend({
-	orderFields: ['Air Date', 'Rating'],
+	orderFields: [
+		{
+			label: 'Air Date',
+			property: 'episode.first_aired'
+		},
+		{
+			label: 'Rating',
+			property: 'episode.ratings.percentage'
+		}
+	],
 	orderDirections: ['Descending', 'Ascending'],
 	filterQuery: '',
 	filterGenre: 'All',
-	ordering: 'Air Date',
 
-	sortDirection: 'Ascending',
-	sortProperties: ['episode.first_aired'],
+
+	init: function() {
+		this._super();
+		this.set('sortDirection', this.get('orderDirections')[1]);
+	},
 
 
 	filterChanged: function() {
@@ -75,16 +86,8 @@ App.IndexController = Ember.ArrayController.extend({
 
 
 	orderChanged: function() {
-		var ordering = this.get('ordering');
-
-		var prop = (function() {
-			if (ordering == 'Air Date') return 'episode.first_aired';
-			if (ordering == 'Rating') return 'episode.ratings.percentage';
-		})();
-
-		if (!prop) return;
-
-		this.set('sortProperties', [prop]);
+		var property = this.get('ordering');
+		this.set('sortProperties', [property]);
 	}.observes('ordering'),
 
 
