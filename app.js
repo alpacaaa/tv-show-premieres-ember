@@ -121,7 +121,5 @@ App.IndexController = Ember.ArrayController.extend({
 
 
 App.EpisodeController = Ember.ObjectController.extend({
-	isLoved: function() {
-		return this.get('episode.ratings.percentage') > 50;
-	}.property()
+	isLoved: Ember.computed.gt('episode.ratings.percentage', 50)
 });
