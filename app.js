@@ -35,11 +35,11 @@ App.IndexRoute = Ember.Route.extend({
 				return obj.show.genres;
 			})
 			.reduce(function(acc, genres) {
-				genres.forEach(function(genre) {
-					if (genre && acc.indexOf(genre) == -1) acc.push(genre);
+				var newGenres = genres.filter(function(genre) {
+					return genre && (acc.indexOf(genre) == -1);
 				});
 
-				return acc;
+				return acc.concat(newGenres);
 			}, []);
 
 
